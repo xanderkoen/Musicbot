@@ -5,7 +5,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('version')
         .setDescription('Returns current bot version'),
-    async execute(interaction) {
+    execute: async ({client, interaction}) => {
         await interaction.reply("The bots current version is : " + process.env.BOT_VERSION);
     }
 }
