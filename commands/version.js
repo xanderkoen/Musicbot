@@ -6,6 +6,6 @@ module.exports = {
         .setName('version')
         .setDescription('Returns current bot version'),
     execute: async ({client, interaction}) => {
-        await interaction.reply("The bots current version is : " + process.env.BOT_VERSION);
+        interaction.reply({content :`The bots current version is : ${process.env.BOT_VERSION}`, ephemeral:true});
     }
 }

@@ -40,6 +40,26 @@ client.player = new Player(client, {
     }
 });
 
+// Load default extractors
+(async () => {
+    try {
+        await client.player.extractors.loadDefault();
+        console.log('Default extractors loaded successfully.');
+    } catch (error) {
+        console.error('Failed to load default extractors:', error);
+    }
+})();
+
+// Event listener for player errors
+client.player.on('error', (queue, error) => {
+    console.error(`Error in queue "${queue.id}":`, error);
+});
+
+// Event listener for when an error occurs during playback
+client.player.on('playerError', (queue, track, error) => {
+    console.error(`Error playing track "${track.title}" in queue "${queue.id}":`, error);
+});
+
 // When the client is ready, run this code
 client.once("ready", () => {
     console.log(`Ready! Logged in as ${client.user.tag}`);
@@ -52,6 +72,8 @@ client.once("ready", () => {
             .then(() => console.log(`Successfully registered commands for guild ${guildId}`))
             .catch(console.error);
     }
+
+    client.player.on('debug', console.log);
 });
 
 // Handle interactions
@@ -79,21 +101,3 @@ client.on(Events.InteractionCreate, async interaction => {
 
 // Log in to Discord
 client.login(process.env.BOT_TOKEN);
-
-
-
-// client.once(Events.ClientReady, readyClient => {
-//     console.log(`Ready! Logged in as ${readyClient.user.tag}`);
-// });
-//
-
-//
-// client.login(Process.env.BOT_TOKEN);
-//
-// client.player = new Player(client, {
-//     ytdlOptions: {
-//         quality: "highestaudio",
-//         highWaterMark: 1 << 25
-//     }
-// })
-//
