@@ -43,8 +43,6 @@ module.exports = {
                 if (result.tracks.length === 0) {
                     console.log(`No results found for query: "${url}"`);
                     return interaction.reply({content: 'No results found for ' + url, ephemeral: true});
-                }else{
-                    console.log("vid found!")
                 }
             }
             else {
@@ -59,8 +57,6 @@ module.exports = {
                 if (result.tracks.length === 0) {
                     console.log(`No results found for query: "${url}"`);
                     return interaction.reply({content: 'No results found for ' + url, ephemeral: true});
-                } else {
-                    console.log("vid found!");
                 }
             }
 

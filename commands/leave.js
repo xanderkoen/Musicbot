@@ -10,17 +10,21 @@ module.exports = {
         // Get the current queue
         const queue = client.player.queues.get(interaction.guildId)
 
-        if (!queue)
+        if (queue)
         {
-            await interaction.reply("There are no songs in the queue")
-            return;
+            // Deletes all the songs from the queue and exits the channel
+            queue.delete();
+            return await interaction.reply(`Left the voice channel - requested by <@${interaction.user.id}>`);
         }
 
-        // Deletes all the songs from the queue and exits the channel
-        queue.delete()
+        // Check if the bot is currently in a voice channel
+        const voiceChannel = interaction.guild.me.voice.channel;
+        if (voiceChannel) {
+            // Leave the voice channel if the bot is in one
+            await interaction.guild.me.voice.disconnect()
+        }
 
-        console.log(interaction.user.id)
-
+        //replies with message
         await interaction.reply(`Left the voice channel - requested by <@${interaction.user.id}>`);
     },
 }
