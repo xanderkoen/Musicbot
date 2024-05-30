@@ -13,13 +13,13 @@ module.exports = {
     execute: async ({client, interaction}) => {
         const queue = client.player.queues.get(interaction.guildId)
 
-        let removeid = interaction.options.getInteger('songid')
+        let removeid = interaction.options.getInteger('songid') - 1
 
         //get remove specific track
         const remove = queue?.tracks.at(removeid);
 
         queue.node.remove(remove)
 
-        return interaction.reply({content :`Successfully removed song`});
+        return interaction.reply({content :`Successfully removed : ${remove.title}`});
     }
 }
