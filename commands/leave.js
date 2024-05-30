@@ -18,13 +18,15 @@ module.exports = {
         }
 
         // Check if the bot is currently in a voice channel
-        const voiceChannel = interaction.guild.me.voice.channel;
-        if (voiceChannel) {
-            // Leave the voice channel if the bot is in one
-            await interaction.guild.me.voice.disconnect()
+        if (interaction.guild.me) {
+            const voiceChannel = interaction.guild.me.voice.channel;
+            if (voiceChannel) {
+                // Leave the voice channel if the bot is in one
+                await interaction.guild.me.voice.disconnect()
+            }
         }
 
         //replies with message
-        await interaction.reply(`Left the voice channel - requested by <@${interaction.user.id}>`);
+        return  interaction.reply(`Left the voice channel - requested by <@${interaction.user.id}>`);
     },
 }

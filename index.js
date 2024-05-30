@@ -33,17 +33,18 @@ for (const file of commandFiles) {
 }
 
 // Initialize the music player
-client.player = new Player(client, {
+const player = new Player(client, {
     ytdlOptions: {
         quality: "highestaudio",
         highWaterMark: 1 << 25
     }
 });
 
+
 // Load default extractors
 (async () => {
     try {
-        await client.player.extractors.loadDefault();
+        await player.extractors.loadDefault();
         console.log('Default extractors loaded successfully.');
     } catch (error) {
         console.error('Failed to load default extractors:', error);
@@ -51,12 +52,12 @@ client.player = new Player(client, {
 })();
 
 // Event listener for player errors
-client.player.on('error', (queue, error) => {
+player.on('error', (queue, error) => {
     console.error(`Error in queue "${queue.id}":`, error);
 });
 
 // Event listener for when an error occurs during playback
-client.player.on('playerError', (queue, track, error) => {
+player.on('playerError', (queue, track, error) => {
     console.error(`Error playing track "${track.title}" in queue "${queue.id}":`, error);
 });
 
@@ -73,8 +74,11 @@ client.once("ready", () => {
             .catch(console.error);
     }
 
-    //client.player.on('debug', console.log);
+    //player.on('debug', console.log);
 });
+
+//add player to the client
+client.player = player;
 
 // Handle interactions
 client.on(Events.InteractionCreate, async interaction => {
