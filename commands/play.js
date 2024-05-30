@@ -26,6 +26,7 @@ module.exports = {
 
             // Search for the song using the discord-player
             let url = interaction.options.getString("search")
+            let result;
 
             //check if message is link or not
             if (url.startsWith('https://') && ytdl.validateURL(url)) // check if answer is url
@@ -33,7 +34,7 @@ module.exports = {
                 console.log(`playing (url) : ${interaction.options.getString("search")}`);
 
                 // Search for the song using the discord-player
-                const result = await client.player.search(url, {
+                result = await client.player.search(url, {
                     requestedBy: interaction.user,
                     searchEngine: QueryType.YOUTUBE_VIDEO
                 })
@@ -45,30 +46,12 @@ module.exports = {
                 }else{
                     console.log("vid found!")
                 }
-
-                //add the track to the queue
-                const song = result.tracks[0]
-                await queue.addTrack(song);
-
-                //build embed response
-                const embed = new EmbedBuilder()
-                    .setDescription(`**[${song.title}](${song.url})** has been added to the Queue`)
-                    .setThumbnail(song.thumbnail)
-                    .setFooter({text: `Duration: ${song.duration}`})
-
-                // Play the song
-                if (!queue.playing) {
-                    //queue.play()
-                }
-
-                // Send the embed with information about the player
-                return interaction.reply({embeds: [embed]});
             }
             else {
                 console.log(`playing (search) : ${interaction.options.getString("search")}`);
 
                 // Search for the song using the discord-player
-                const result = await client.player.search(url, {
+                result = await client.player.search(url, {
                     requestedBy: interaction.user,
                     searchEngine: QueryType.YOUTUBE_SEARCH
                 })
@@ -79,10 +62,10 @@ module.exports = {
                 } else {
                     console.log("vid found!");
                 }
+            }
 
                 //add the track to the queue
                 const song = result.tracks[0]
-                await queue.addTrack(song);
 
                 //build embed response
                 const embed = new EmbedBuilder()
@@ -98,6 +81,6 @@ module.exports = {
                 // Send the embed with information about the player
                 return interaction.reply({embeds: [embed]});
 
-            }
+
     }
 }

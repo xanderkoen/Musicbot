@@ -73,7 +73,7 @@ client.once("ready", () => {
             .catch(console.error);
     }
 
-    client.player.on('debug', console.log);
+    //client.player.on('debug', console.log);
 });
 
 // Handle interactions
